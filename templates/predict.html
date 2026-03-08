@@ -1,0 +1,657 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="prediction-container">
+    <div class="prediction-header">
+        <h1 class="prediction-title">Hypertension Stage Prediction</h1>
+        <p class="prediction-subtitle">Please provide your information below for accurate prediction</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <form action="" method="post" class="prediction-form" id="predictionForm">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-sections">
+            <!-- Personal Information Section -->
+            <div class="form-section active" id="section1">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <h2>Personal Information</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Gender.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.Gender(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.Gender.errors %}
+                            {% for error in form.Gender.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Age.label }}</label>
+                        {{ form.Age(class="form-input", placeholder="Enter your age") }}
+                        {% if form.Age.errors %}
+                            {% for error in form.Age.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="section-navigation">
+                    <button type="button" class="btn-next" onclick="nextSection(1)">Next <span>→</span></button>
+                </div>
+            </div>
+
+            <!-- Medical History Section -->
+            <div class="form-section" id="section2">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <h2>Medical History</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">{{ form.History.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.History(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.History.errors %}
+                            {% for error in form.History.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Patient.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.Patient(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.Patient.errors %}
+                            {% for error in form.Patient.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.TakeMedication.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.TakeMedication(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.TakeMedication.errors %}
+                            {% for error in form.TakeMedication.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Whendiagnoused.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.Whendiagnoused(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.Whendiagnoused.errors %}
+                            {% for error in form.Whendiagnoused.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="section-navigation">
+                    <button type="button" class="btn-prev" onclick="prevSection(2)"><span>←</span> Previous</button>
+                    <button type="button" class="btn-next" onclick="nextSection(2)">Next <span>→</span></button>
+                </div>
+            </div>
+
+            <!-- Symptoms Section -->
+            <div class="form-section" id="section3">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <h2>Symptoms & Severity</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Severity.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.Severity(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.Severity.errors %}
+                            {% for error in form.Severity.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.BreathShortness.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.BreathShortness(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.BreathShortness.errors %}
+                            {% for error in form.BreathShortness.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.VisualChanges.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.VisualChanges(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.VisualChanges.errors %}
+                            {% for error in form.VisualChanges.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.NoseBleeding.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.NoseBleeding(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.NoseBleeding.errors %}
+                            {% for error in form.NoseBleeding.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="section-navigation">
+                    <button type="button" class="btn-prev" onclick="prevSection(3)"><span>←</span> Previous</button>
+                    <button type="button" class="btn-next" onclick="nextSection(3)">Next <span>→</span></button>
+                </div>
+            </div>
+
+            <!-- Blood Pressure & Diet Section -->
+            <div class="form-section" id="section4">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <h2>Blood Pressure & Lifestyle</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Systolic.label }}</label>
+                        {{ form.Systolic(class="form-input", placeholder="e.g., 120") }}
+                        {% if form.Systolic.errors %}
+                            {% for error in form.Systolic.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.Diastolic.label }}</label>
+                        {{ form.Diastolic(class="form-input", placeholder="e.g., 80") }}
+                        {% if form.Diastolic.errors %}
+                            {% for error in form.Diastolic.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ form.ControlledDiet.label }}</label>
+                        <div class="select-wrapper">
+                            {{ form.ControlledDiet(class="form-select") }}
+                            <div class="select-arrow">▼</div>
+                        </div>
+                        {% if form.ControlledDiet.errors %}
+                            {% for error in form.ControlledDiet.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="section-navigation">
+                    <button type="button" class="btn-prev" onclick="prevSection(4)"><span>←</span> Previous</button>
+                    <button type="submit" class="btn-submit">
+                        <span class="submit-text">Get Prediction</span>
+                        <div class="loading-spinner" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if output %}
+    <div class="result-section">
+        <div class="result-card">
+            <div class="result-header">
+                <h3>Prediction Result</h3>
+                <div class="result-icon">📊</div>
+            </div>
+            <div class="result-content">
+                <p class="result-text">{{ output }}</p>
+            </div>
+            <div class="result-actions">
+                <a href="{{ url_for('home') }}" class="btn-home">← Back to Home</a>
+                <button class="btn-new-prediction" onclick="resetForm()">New Prediction</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+
+.prediction-container{
+max-width:850px;
+margin:auto;
+padding:2rem;
+}
+
+/* HEADER */
+
+.prediction-header{
+text-align:center;
+margin-bottom:2.5rem;
+}
+
+.prediction-title{
+font-size:2.4rem;
+color:#0f172a;
+margin-bottom:.6rem;
+font-weight:700;
+}
+
+.prediction-subtitle{
+color:#475569;
+font-size:1.05rem;
+margin-bottom:2rem;
+}
+
+/* PROGRESS BAR */
+
+.progress-bar{
+width:100%;
+height:8px;
+background:#e2e8f0;
+border-radius:10px;
+overflow:hidden;
+margin-bottom:2rem;
+}
+
+.progress-fill{
+height:100%;
+background:#0284c7;
+width:25%;
+transition:width .3s ease;
+}
+
+/* FORM SECTION */
+
+.form-section{
+display:none;
+background:white;
+padding:2rem;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,0.06);
+margin-bottom:2rem;
+border:1px solid #e2e8f0;
+}
+
+.form-section.active{
+display:block;
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* SECTION HEADER */
+
+.section-header{
+display:flex;
+align-items:center;
+margin-bottom:1.5rem;
+padding-bottom:.8rem;
+border-bottom:1px solid #e2e8f0;
+}
+
+.section-number{
+width:36px;
+height:36px;
+background:#0284c7;
+color:white;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:600;
+margin-right:.8rem;
+}
+
+.section-header h2{
+color:#0f172a;
+font-size:1.4rem;
+margin:0;
+}
+
+/* FORM GRID */
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:1.4rem;
+margin-bottom:2rem;
+}
+
+.form-group{
+display:flex;
+flex-direction:column;
+}
+
+.form-label{
+font-weight:600;
+color:#334155;
+margin-bottom:.4rem;
+font-size:.9rem;
+}
+
+/* INPUTS */
+
+.form-input,
+.form-select{
+padding:.7rem .9rem;
+border:1px solid #cbd5e1;
+border-radius:6px;
+font-size:.95rem;
+background:white;
+transition:.2s;
+}
+
+.form-input:focus,
+.form-select:focus{
+outline:none;
+border-color:#0284c7;
+box-shadow:0 0 0 2px rgba(2,132,199,.15);
+}
+
+.form-input::placeholder{
+color:#94a3b8;
+}
+
+/* SELECT */
+
+.select-wrapper{
+position:relative;
+}
+
+.select-arrow{
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+color:#64748b;
+font-size:.7rem;
+pointer-events:none;
+}
+
+/* ERROR */
+
+.error-message{
+color:#dc2626;
+font-size:.8rem;
+margin-top:3px;
+}
+
+/* NAVIGATION */
+
+.section-navigation{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding-top:1.5rem;
+border-top:1px solid #e2e8f0;
+}
+
+/* BUTTONS */
+
+.btn-prev,
+.btn-next,
+.btn-submit{
+padding:.6rem 1.3rem;
+border-radius:6px;
+font-weight:600;
+cursor:pointer;
+border:none;
+display:flex;
+align-items:center;
+gap:.4rem;
+font-size:.9rem;
+}
+
+.btn-prev{
+background:#e2e8f0;
+color:#334155;
+}
+
+.btn-prev:hover{
+background:#cbd5e1;
+}
+
+.btn-next{
+background:#0284c7;
+color:white;
+}
+
+.btn-next:hover{
+background:#0369a1;
+}
+
+.btn-submit{
+background:#16a34a;
+color:white;
+}
+
+.btn-submit:hover{
+background:#15803d;
+}
+
+/* LOADER */
+
+.spinner{
+width:14px;
+height:14px;
+border:2px solid rgba(255,255,255,.4);
+border-top:2px solid white;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+
+/* RESULT */
+
+.result-section{
+margin-top:2.5rem;
+}
+
+.result-card{
+background:#f8fafc;
+padding:2rem;
+border-radius:12px;
+border:1px solid #e2e8f0;
+text-align:center;
+}
+
+.result-header{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:.6rem;
+margin-bottom:1rem;
+}
+
+.result-icon{
+font-size:1.6rem;
+}
+
+.result-text{
+font-size:1.2rem;
+font-weight:600;
+color:#0f172a;
+}
+
+/* RESULT BUTTONS */
+
+.result-actions{
+display:flex;
+gap:1rem;
+justify-content:center;
+margin-top:1.5rem;
+flex-wrap:wrap;
+}
+
+.btn-home{
+background:#e2e8f0;
+padding:.6rem 1.2rem;
+border-radius:6px;
+font-weight:600;
+color:#334155;
+}
+
+.btn-home:hover{
+background:#cbd5e1;
+}
+
+.btn-new-prediction{
+background:#0284c7;
+color:white;
+padding:.6rem 1.2rem;
+border:none;
+border-radius:6px;
+font-weight:600;
+cursor:pointer;
+}
+
+.btn-new-prediction:hover{
+background:#0369a1;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.prediction-container{
+padding:1rem;
+}
+
+.prediction-title{
+font-size:2rem;
+}
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+.section-navigation{
+flex-direction:column;
+gap:.8rem;
+}
+
+.result-actions{
+flex-direction:column;
+}
+
+}
+
+</style>
+
+<script>
+let currentSection = 1;
+const totalSections = 4;
+
+function updateProgress() {
+    const progress = (currentSection / totalSections) * 100;
+    document.getElementById('progressFill').style.width = progress + '%';
+}
+
+function showSection(sectionNumber) {
+    // Hide all sections
+    document.querySelectorAll('.form-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Show current section
+    document.getElementById('section' + sectionNumber).classList.add('active');
+    
+    // Update progress
+    updateProgress();
+}
+
+function nextSection(currentSectionNumber) {
+    if (currentSectionNumber < totalSections) {
+        currentSection = currentSectionNumber + 1;
+        showSection(currentSection);
+    }
+}
+
+function prevSection(currentSectionNumber) {
+    if (currentSectionNumber > 1) {
+        currentSection = currentSectionNumber - 1;
+        showSection(currentSection);
+    }
+}
+
+function resetForm() {
+    document.getElementById('predictionForm').reset();
+    currentSection = 1;
+    showSection(1);
+    // Hide result section if it exists
+    const resultSection = document.querySelector('.result-section');
+    if (resultSection) {
+        resultSection.style.display = 'none';
+    }
+}
+
+// Initialize the form
+document.addEventListener('DOMContentLoaded', function() {
+    updateProgress();
+    
+    // Add form submission handling
+    const form = document.getElementById('predictionForm');
+    const submitBtn = form.querySelector('.btn-submit');
+    const submitText = submitBtn.querySelector('.submit-text');
+    const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+    
+    form.addEventListener('submit', function() {
+        submitText.style.display = 'none';
+        loadingSpinner.style.display = 'flex';
+        submitBtn.disabled = true;
+    });
+});
+</script>
+{% endblock content %}
